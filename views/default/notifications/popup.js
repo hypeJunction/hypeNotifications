@@ -11,10 +11,14 @@ define(function (require) {
 		 * @returns {void}
 		 */
 		setNewBadge: function (unread) {
+			var unread_str = unread;
+			if (unread > 99) {
+				unread_str = '99+';
+			}
 			if (unread > 0) {
-				$('#notifications-new').text(unread).removeClass('hidden');
+				$('#notifications-new').text(unread_str).removeClass('hidden');
 			} else {
-				$('#notifications-new').text(unread).addClass('hidden');
+				$('#notifications-new').text(unread_str).addClass('hidden');
 			}
 		},
 		ticker: function () {
