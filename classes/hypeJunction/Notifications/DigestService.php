@@ -64,10 +64,28 @@ class DigestService {
 	 * @return array
 	 */
 	public static function getNotificationEvents() {
-		$notification_events['subscriptions'] = _elgg_services()->notifications->getEvents();
+		$ignored_events = ['send'];
+
+		$subscriptions = _elgg_services()->notifications->getEvents();
+
+		foreach ($subscriptions as $object_type => $object_subtypes) {
+			foreach ($object_subtypes as $object_subtype => $events) {
+				foreach ($events as $key => $event) {
+					if (in_array($event, $ignored_events)) {
+						unset($subscriptions[$object_type][$object_subtype][$key]);
+					}
+				}
+			}
+		}
+
+		$notification_events['subscriptions'] = $subscriptions;
 
 		// Add instant notifications that can be batched
 		$notification_events['instant']['user']['default'][] = 'add_friend';
+		if (elgg_is_active_plugin('friend_request')) {
+			$notification_events['instant']['user']['default'][] = 'friend_request';
+			$notification_events['instant']['user']['default'][] = 'friend_request_decline';
+		}
 
 		$notification_events['instant']['object']['comment'][] = 'create';
 
