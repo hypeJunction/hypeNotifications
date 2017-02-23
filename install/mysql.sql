@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS `prefix_site_notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `recipient_guid` bigint(20) unsigned NOT NULL,
+  `action` varchar(50) NOT NULL,
+  `actor_guid` bigint(20) unsigned NOT NULL,
+  `object_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `object_type` varchar(255) DEFAULT '',
+  `object_subtype` varchar(255) DEFAULT '',
+  `time_created` int(11) NOT NULL,
+  `time_seen` int(11) DEFAULT '0',
+  `time_read` int(11) DEFAULT '0',
+  `access_guid` bigint(20) unsigned NOT NULL,
+  `access_owner_guid` bigint(20) unsigned NOT NULL,
+  `access_id` int(11) NOT NULL,
+  `data` mediumblob DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `recipient_guid` (`recipient_guid`),
+  KEY `actor_guid` (`actor_guid`),
+  KEY `object_id` (`object_id`),
+  KEY `action` (`action`),
+  KEY `object_type` (`object_type`),
+  KEY `object_subtype` (`object_subtype`),
+  KEY `time_created` (`time_created`),
+  KEY `time_seen` (`time_seen`),
+  KEY `time_read` (`time_read`),
+  KEY `access_guid` (`access_guid`),
+  KEY `access_id` (`access_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `prefix_digest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `recipient_guid` bigint(20) unsigned NOT NULL,
+  `time_created` int(11) NOT NULL,
+  `time_scheduled` int(11) DEFAULT '0',
+  `data` mediumblob DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `recipient_guid` (`recipient_guid`),
+  KEY `time_created` (`time_created`),
+  KEY `time_scheduled` (`time_scheduled`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

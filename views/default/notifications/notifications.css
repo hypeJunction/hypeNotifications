@@ -1,0 +1,53 @@
+.elgg-notifications-popup {
+	max-width: 400px;
+	padding: 0;
+}
+
+.elgg-notifications-popup .elgg-foot {
+	border-top: 1px solid #dddddd;
+}
+
+.elgg-notifications-popup .elgg-foot a {
+    text-align: center;
+    font-size: 12px;
+    min-width: 30px;
+    padding: 4px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.elgg-notifications-popup .elgg-list {
+	margin: 0;
+	padding: 0;
+	max-height: 300px;
+    overflow-y: auto;
+}
+
+.elgg-notifications-popup .elgg-list .elgg-image-block {
+	padding: 10px;
+}
+
+.notifications-list .elgg-content,
+.notifications-list .elgg-output,
+.notifications-list p {
+	margin: 0;
+}
+
+.elgg-notifications-popup .elgg-foot {
+	text-align: center;
+}
+
+.elgg-notifications-popup .elgg-ajax-loader {
+	padding: 30px;
+}
+
+.notification-summary-link,
+.notification-summary {
+	color: inherit;
+	text-decoration: none;
+}
+
+.notification-new {
+    background: #ecf0f7;
+}
