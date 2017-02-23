@@ -119,7 +119,7 @@ class Notification extends ElggData {
 	 * @return void
 	 * @throws LogicException
 	 */
-	public function setRecipient(ElggEntity $recipient) {
+	public function setRecipient(ElggEntity $recipient = null) {
 		if ($this->id) {
 			throw new LogicException('Can not change the recipient of the notification once it is saved');
 		}
@@ -174,7 +174,7 @@ class Notification extends ElggData {
 	 * @return void
 	 * @throws LogicException
 	 */
-	public function setAction($action) {
+	public function setAction($action = '') {
 		if ($this->id) {
 			throw new LogicException('Can not change the action of the notification once it is saved');
 		}
@@ -188,18 +188,20 @@ class Notification extends ElggData {
 	 * @return void
 	 * @throws LogicException
 	 */
-	public function setObject(ElggData $object) {
+	public function setObject(ElggData $object = null) {
 		if ($this->id) {
 			throw new LogicException('Can not change the object of the notification once it is saved');
 		}
 		if ($object instanceof ElggEntity) {
 			$this->set('object_id', $object->guid);
-		} else {
+		} else if ($object instanceof ElggData) {
 			$this->set('object_id', $object->id);
 		}
 
-		$this->set('object_type', (string) $object->getType());
-		$this->set('object_subtype', (string) $object->getSubtype());
+		if ($object instanceof ElggData) {
+			$this->set('object_type', (string) $object->getType());
+			$this->set('object_subtype', (string) $object->getSubtype());
+		}
 
 		if ($object instanceof ElggEntity) {
 			$this->set('access_guid', $object->guid);
@@ -238,7 +240,7 @@ class Notification extends ElggData {
 	 * @param mixed $data Data
 	 * @return void
 	 */
-	public function setData($data) {
+	public function setData($data = null) {
 		$this->set('data', $data);
 	}
 
