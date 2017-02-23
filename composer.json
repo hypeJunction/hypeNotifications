@@ -16,6 +16,9 @@
 			"email": "info@hypejunction.com"
 		}
 	],
+	"extra": {
+		"installer-name": "hypeNotifications"
+	},
 	"require": {
 		"php": ">=5.5",
 		"composer/installers": "~1.0",
