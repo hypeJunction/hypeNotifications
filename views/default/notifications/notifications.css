@@ -17,14 +17,18 @@
     text-align: center;
 }
 
-.elgg-notifications-popup .elgg-list {
+.elgg-notifications-popup .notifications-list {
 	margin: 0;
 	padding: 0;
 	max-height: 300px;
     overflow-y: auto;
 }
 
-.elgg-notifications-popup .elgg-list .elgg-image-block {
+.elgg-notifications-popup .notifications-list > li {
+	padding: 0;
+}
+
+.elgg-notifications-popup .notifications-list .elgg-image-block {
 	padding: 10px;
 }
 
