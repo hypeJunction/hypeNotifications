@@ -12,7 +12,8 @@ if (!$notification instanceof Notification) {
 $actor = $notification->getActor();
 $object = $notification->getObject();
 
-$icon = elgg_view_entity_icon($actor, 'tiny', [
+$size = elgg_extract('size', $vars, 'small');
+$icon = elgg_view_entity_icon($actor, $size, [
 	'use_hover' => false,
 	'use_link' => false,
 	'href' => false,
