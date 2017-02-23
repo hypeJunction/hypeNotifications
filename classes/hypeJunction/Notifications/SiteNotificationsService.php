@@ -74,9 +74,13 @@ class SiteNotificationsService {
 
 		$site_notification = new Notification();
 		$site_notification->setRecipient($notification->getRecipient());
-		$site_notification->setAction($event->getAction());
-		$site_notification->setActor($event->getActor());
-		$site_notification->setObject($event->getObject() ?: null);
+		if (!$event instanceof NotificationEvent) {
+			$site_notification->setAction($event->getAction());
+			$site_notification->setActor($event->getActor() ?: $notification->getSender());
+			$site_notification->setObject($event->getObject() ?: null);
+		} else {
+			$site_notification->setActor($notification->getSender());
+		}
 		$site_notification->setData((array) $notification->toObject());
 		if ($site_notification->save()) {
 			return true;
@@ -161,7 +165,7 @@ class SiteNotificationsService {
 	 * @return void
 	 */
 	public static function dismissObjectNotifications($hook, $view_name, $return, $params) {
-		
+
 		if (empty($return)) {
 			return;
 		}
@@ -214,4 +218,5 @@ class SiteNotificationsService {
 
 		elgg_add_subscription($relationship->guid_one, 'notifysite', $relationship->guid_two);
 	}
+
 }
