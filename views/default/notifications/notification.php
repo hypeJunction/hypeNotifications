@@ -42,6 +42,10 @@ if ($full) {
 	$class[] = 'notification-summary-listing';
 }
 
+$content .= elgg_format_element('div', [
+	'class' => 'notification-time',
+], elgg_view_friendly_time($notification->time_created));
+
 echo elgg_view('object/elements/summary', [
 	'entity' => $actor,
 	'title' => false,
