@@ -64,15 +64,4 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_extend_view('elgg.css', 'notifications.css'); // core notifications
 	elgg_extend_view('elgg.css', 'notifications/notifications.css');
 
-	$blogs = elgg_get_entities([
-		'types' => 'object',
-		'subtypes' => ['blog', 'file', 'discussion'],
-		'limit' => 20,
-		'order_by' => 'RAND()',
-	]);
-
-	foreach ($blogs as $blog) {
-		elgg_trigger_event('create', 'object', $blog);
-	}
-
 });
