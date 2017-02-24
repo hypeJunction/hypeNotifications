@@ -451,6 +451,10 @@ class Notification extends ElggData {
 			$summary = $this->data['body'];
 		}
 
+		if (!$summary) {
+			$summary = $this->data['summary'];
+		}
+		
 		$params = [
 			'notification' => $this,
 		];
