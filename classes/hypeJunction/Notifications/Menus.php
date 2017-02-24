@@ -79,20 +79,42 @@ class Menus {
 	 */
 	public static function setupPageMenu($hook, $type, $return, $params) {
 
-		if (!elgg_in_context('settings')) {
-			return;
-		}
-
-		$page_owner = elgg_get_page_owner_entity();
-		if (!$page_owner instanceof ElggUser) {
-			return;
+		if (elgg_in_context('settings')) {
+			$page_owner = elgg_get_page_owner_entity();
+			if ($page_owner instanceof ElggUser) {
+				$return[] = ElggMenuItem::factory([
+							'name' => 'notifications:digest',
+							'text' => elgg_echo('notifications:settings:digest'),
+							'href' => "notifications/settings/digest/$page_owner->username",
+							'section' => 'notifications',
+				]);
+			}
 		}
 
 		$return[] = ElggMenuItem::factory([
-					'name' => 'notifications:digest',
-					'text' => elgg_echo('notifications:settings:digest'),
-					'href' => "notifications/settings/digest/$page_owner->username",
-					'section' => 'notifications',
+					'name' => 'notifications',
+					'text' => elgg_echo('admin:notifications'),
+					'href' => '#',
+					'section' => 'configure',
+					'context' => ['admin'],
+		]);
+
+		$return[] = ElggMenuItem::factory([
+					'name' => 'notifications:methods',
+					'text' => elgg_echo('admin:notifications:methods'),
+					'href' => 'admin/notifications/methods',
+					'section' => 'configure',
+					'parent_name' => 'notifications',
+					'context' => ['admin'],
+		]);
+
+		$return[] = ElggMenuItem::factory([
+					'name' => 'notifications:test_email',
+					'text' => elgg_echo('admin:notifications:test_email'),
+					'href' => 'admin/notifications/test_email',
+					'section' => 'configure',
+					'parent_name' => 'notifications',
+					'context' => ['admin'],
 		]);
 
 		return $return;

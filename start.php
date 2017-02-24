@@ -47,14 +47,14 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('format', 'notification:email', [EmailNotificationsService::class, 'formatNotification'], 999);
 
 	// Actions
-	elgg_register_action('admin/notifications/notification_methods', __DIR__ . '/actions/admin/notifications/notification_methods.php', 'admin');
+	elgg_register_action('admin/notifications/methods', __DIR__ . '/actions/admin/notifications/methods.php', 'admin');
+	elgg_register_action('admin/notifications/test_email', __DIR__ . '/actions/admin/notifications/test_email.php', 'admin');
 	elgg_register_action('notifications/mark_all_read', __DIR__ . '/actions/notifications/mark_all_read.php');
 	elgg_register_action('notifications/mark_read', __DIR__ . '/actions/notifications/mark_read.php');
 	elgg_register_action('notifications/settings/digest', __DIR__ . '/actions/notifications/settings/digest.php');
-	elgg_register_action('notifications/html/test', __DIR__ . '/actions/notifications/html/test.php', 'admin');
+	
 
 	// Menus
-	elgg_register_admin_menu_item('administer', 'notification_methods', 'administer_utilities');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', [Menus::class, 'setupTopbarMenu']);
 	elgg_register_plugin_hook_handler('register', 'menu:page', [Menus::class, 'setupPageMenu']);
 

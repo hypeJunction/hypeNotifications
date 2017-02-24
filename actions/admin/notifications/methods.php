@@ -1,6 +1,7 @@
 <?php
 
-set_time_limit(0);
+$limit = get_input('limit');
+$offset = get_input('offset');
 
 $personal_methods = (array) get_input('personal', []);
 $friends_methods = (array) get_input('friends', []);
@@ -8,7 +9,8 @@ $groups_methods = (array) get_input('groups', []);
 
 $users = elgg_get_entities([
 	'types' => 'user',
-	'limit' => 0,
+	'limit' => $limit,
+	'offset' => $offset,
 	'batch' => true,
 		]);
 
@@ -62,5 +64,5 @@ foreach ($users as $user) {
 	$i++;
 }
 
-return elgg_ok_response('', elgg_echo('admin:notifiations:notifications_methods:success', [$i]));
+return elgg_ok_response();
 

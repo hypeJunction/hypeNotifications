@@ -90,7 +90,7 @@ class EmailNotificationsService {
 		if (!elgg_get_plugin_setting('enable_html_emails', 'hypeNotifications')) {
 			return;
 		}
-
+		
 		$body = elgg_view('notifications/wrapper/html/post', [
 			'notification' => $notification,
 		]);
@@ -161,7 +161,7 @@ class EmailNotificationsService {
 
 		$notification = new ElggNotification($sender, $recipient, $language, $return['subject'], $return['body'], $summary, $email_params);
 
-		$notification = $this->hooks->trigger('format', "notification:email", [], $notification);
+		$notification = elgg_trigger_plugin_hook('format', "notification:email", [], $notification);
 		$email_params['notification'] = $notification;
 
 		return elgg_trigger_plugin_hook('send', "notification:email", $email_params, false);

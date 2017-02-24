@@ -4,19 +4,6 @@ $entity = elgg_extract('entity', $vars);
 
 $site = elgg_get_site_entity();
 
-$title = elgg_echo('notifications:settings:test');
-$text = elgg_echo('notifications:settings:text:recipient', [$site->email]);
-
-$button = elgg_view('output/url', array(
-	'href' => elgg_echo('action/notifications/html/test'),
-	'is_action' => true,
-	'text' => elgg_echo('notifications:settings:send'),
-	'class' => 'elgg-button elgg-button-action mtl mbl',
-));
-echo elgg_view_module('info', $title, $text, [
-	'footer' => $button,
-]);
-
 echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('notifications:settings:mode'),

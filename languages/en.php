@@ -1,20 +1,26 @@
 <?php
 
 return [
-	'admin:administer_utilities:notification_methods' => 'Notification Methods',
-	'admin:notifications:notifiation_methods:help' => '
+	'admin:notifications' => 'Notifications',
+	
+	'admin:notifications:methods' => 'Notification Methods',
+	'admin:notifications:methods:help' => '
 		Using the form below, you can update personal and subscription notification preferences for all site users.
 		Note that this will override any preferences users may have selected previously, 
 		and they will have to opt out of notifications again.
 	',
 	
-	'admin:notifiations:notifications_methods:personal' => 'Instant (personal) notifications',
-	'admin:notifiations:notifications_methods:friends' => 'Friend subscriptions',
-	'admin:notifiations:notifications_methods:groups' => 'Group subscriptions',
+	'admin:notifications:methods:personal' => 'Instant (personal) notifications',
+	'admin:notifications:methods:friends' => 'Friend subscriptions',
+	'admin:notifications:methods:groups' => 'Group subscriptions',
 
-	'admin:notifiations:notifications_methods:success' => 'Notification method preferences have been updated for %s users',
-
-	'hypeNotifications:usersettings:title' => 'Notifications',
+	'admin:notifications:test_email' => 'Test Email',
+	'admin:notifications:test_email:recipient' => 'Recipient',
+	'admin:notifications:test_email:subject' => 'Subject',
+	'admin:notifications:test_email:body' => 'Body',
+	'admin:notifications:test_email:attachments' => 'Attachment',
+	'admin:notifications:test_email:success' => 'Email was sent successfully',
+	'admin:notifications:test_email:error' => 'Email could not be sent',
 
 	'notification:method:site' => 'Site',
 
@@ -94,13 +100,7 @@ return [
 	'notifications:settings:smtp_connection:crammd5' => 'SMTP with AUTH CRAM-MD5',
 	'notifications:settings:smtp_username' => 'SMTP Username',
 	'notifications:settings:smtp_password' => 'SMTP Passoword',
-
-	'notifications:settings:test' => 'Send Test Email',
-	'notifications:settings:text:recipient' => 'Email will be sent to %s using the settings specified below',
-	'notifications:settings:send' => 'Send Email',
-	'notifications:settings:send:success' => 'Email successfully sent',
-	'notifications:settings:send:error' => 'Email was not sent',
-
+	
 	'notifications:settings:mode' => 'Site mode',
 	'notifications:settings:mode:help' => 'In staging mode, email/domain whitelist settings will apply. In production mode, emails will be sent as usual',
 	'notifications:settings:mode:production' => 'Production mode',
