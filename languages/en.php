@@ -122,4 +122,7 @@ return [
 	'notifications:mark_all_read' => 'Mark all read',
 
 	'notifications:no_results' => 'You do not have any notifications yet',
+
+	'admin:upgrades:notifications:notifier' => 'Migrate notifier notifications',
+	'admin:upgrades:notifications:notifier:description' => 'Migrate notification entities created by the notifier plugin to the new database table and clean up redundnant entities upon completion',
 ];

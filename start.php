@@ -52,7 +52,7 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_action('notifications/mark_all_read', __DIR__ . '/actions/notifications/mark_all_read.php');
 	elgg_register_action('notifications/mark_read', __DIR__ . '/actions/notifications/mark_read.php');
 	elgg_register_action('notifications/settings/digest', __DIR__ . '/actions/notifications/settings/digest.php');
-	
+	elgg_register_action('upgrade/notifications/notifier', __DIR__ . '/actions/upgrade/notifications/notifier.php', 'admin');
 
 	// Menus
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', [Menus::class, 'setupTopbarMenu']);
@@ -64,4 +64,11 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_extend_view('elgg.css', 'notifications.css'); // core notifications
 	elgg_extend_view('elgg.css', 'notifications/notifications.css');
 
+});
+
+elgg_register_event_handler('upgrade', 'system', function() {
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	require __DIR__ . '/lib/upgrades.php';
 });

@@ -6,7 +6,6 @@ use ElggData;
 use ElggEntity;
 use ElggExtender;
 use ElggRelationship;
-use ElggUser;
 use LogicException;
 use stdClass;
 
@@ -77,7 +76,9 @@ class Notification extends ElggData {
 
 		$svc = SiteNotificationsService::getInstance();
 		if (!$id) {
-			$this->set('time_created', time());
+			if (!$this->get('time_created')) {
+				$this->set('time_created', time());
+			}
 			return $svc->getTable()->insert($this);
 		} else {
 			return $svc->getTable()->update($this);
@@ -143,11 +144,11 @@ class Notification extends ElggData {
 	/**
 	 * Set actor
 	 *
-	 * @param ElggUser $actor Actor
+	 * @param ElggEntity $actor Actor
 	 * @return void
 	 * @throws LogicException
 	 */
-	public function setActor(ElggUser $actor = null) {
+	public function setActor(ElggEntity $actor = null) {
 		if ($this->id) {
 			throw new LogicException('Can not change the actor of the notification once it is saved');
 		}
