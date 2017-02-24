@@ -9,13 +9,15 @@ $body = get_input('body', '', false);
 
 $attachments = [];
 $uploads = elgg_get_uploaded_files('attachments');
-foreach ($uploads as $upload) {
-	if ($upload->isValid()) {
-		$file = new ElggFile();
-		$file->owner_guid = $user->guid;
-		$file->access_id = ACCESS_PRIVATE;
-		$file->acceptUploadedFile($upload);
-		$attachments[] = $file;
+if (!empty($uploads)) {
+	foreach ($uploads as $upload) {
+		if ($upload && $upload->isValid()) {
+			$file = new ElggFile();
+			$file->owner_guid = $user->guid;
+			$file->access_id = ACCESS_PRIVATE;
+			$file->acceptUploadedFile($upload);
+			$attachments[] = $file;
+		}
 	}
 }
 
