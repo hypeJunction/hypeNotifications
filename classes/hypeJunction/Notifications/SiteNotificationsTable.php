@@ -245,7 +245,7 @@ class SiteNotificationsTable {
 			UPDATE {$this->table}
 			SET access_guid = :access_guid,
 				access_owner_guid = :access_owner_guid,
-				access_id = :access_id,
+				access_id = :access_id
 			WHERE id = :id AND object_type = :type
 		";
 
