@@ -2,6 +2,9 @@
 
 ![Elgg 2.2](https://img.shields.io/badge/Elgg-2.2-orange.svg?style=flat-square)
 
+![Popup](https://raw.github.com/hypeJunction/hypeNotifications/master/screenshots/popup.png "Popup")
+![Digest](https://raw.github.com/hypeJunction/hypeNotifications/master/screenshots/digest.png "Email Digest")
+
 ## Features
 
  * Facebook-style site notifications
