@@ -74,7 +74,7 @@ class SiteNotificationsService {
 
 		$site_notification = new Notification();
 		$site_notification->setRecipient($notification->getRecipient());
-		if (!$event instanceof NotificationEvent) {
+		if ($event instanceof NotificationEvent) {
 			$site_notification->setAction($event->getAction());
 			$site_notification->setActor($event->getActor() ?: $notification->getSender());
 			$site_notification->setObject($event->getObject() ?: null);
