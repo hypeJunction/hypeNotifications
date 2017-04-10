@@ -1,5 +1,6 @@
 define(function (require) {
 
+	var elgg = require('elgg');
 	var $ = require('jquery');
 	var Ajax = require('elgg/Ajax');
 
