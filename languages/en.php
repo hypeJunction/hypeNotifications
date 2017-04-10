@@ -59,7 +59,7 @@ return [
 	'notification:instant:friend_request_decline:user:default' => 'Someone declines your friend request',
 	'notification:instant:create:annotation:likes' => 'Someone likes your content',
 	'notification:instant:add_membership:group:default' => 'Your group membership request is approved',
-	'notification:instant:invite:group:default' => 'Someone invitest you to join a group',
+	'notification:instant:invite:group:default' => 'Someone invites you to join a group',
 	'notification:instant:create:object:comment' => 'Someone comments on your content',
 
 	'notifications:subscriptions' => 'Notifications about friends and groups',

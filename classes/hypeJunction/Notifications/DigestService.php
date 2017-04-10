@@ -64,7 +64,7 @@ class DigestService {
 	 * @return array
 	 */
 	public static function getNotificationEvents() {
-		$ignored_events = ['send'];
+		$ignored_events = ['send', 'enqueue', 'admin_approval'];
 
 		$subscriptions = _elgg_services()->notifications->getEvents();
 
