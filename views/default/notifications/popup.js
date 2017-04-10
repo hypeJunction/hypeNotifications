@@ -64,7 +64,10 @@ define(function (require) {
 	var timeout = function () {
 		setTimeout(ticker, 60000);
 	};
-	ticker();
+
+	if (elgg.is_logged_in()) {
+		ticker();
+	}
 
 	return popup;
 });
