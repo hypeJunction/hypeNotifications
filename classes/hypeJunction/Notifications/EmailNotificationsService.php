@@ -238,8 +238,6 @@ class EmailNotificationsService {
 			// make the email body
 			$mime_body = new MimeMessage();
 
-			$options['headers']['Content-Type'] = "multipart/alternative; charset=UTF-8; format=flowed";
-
 			if (elgg_get_plugin_setting('enable_html_emails', 'hypeNotifications')) {
 				$html_body = elgg_view('notifications/wrapper/html', $options);
 				$html_part = new MimePart($html_body);
