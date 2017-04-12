@@ -219,4 +219,17 @@ class SiteNotificationsService {
 		elgg_add_subscription($relationship->guid_one, 'notifysite', $relationship->guid_two);
 	}
 
+	/**
+	 * Set client-side data
+	 * 
+	 * @param string $hook   "elgg.data"
+	 * @param string $type   "site"
+	 * @param array  $return Data
+	 * @param array  $params Hook params
+	 * @return array
+	 */
+	public static function setClientSiteConfig($hook, $type, $return, $params) {
+		$return['notifications']['ticker'] = (int) elgg_get_plugin_setting('ticker', 'hypeNotifications', 60);
+		return $return;
+	}
 }

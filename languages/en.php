@@ -125,4 +125,12 @@ return [
 
 	'admin:upgrades:notifications:notifier' => 'Migrate notifier notifications',
 	'admin:upgrades:notifications:notifier:description' => 'Migrate notification entities created by the notifier plugin to the new database table and clean up redundnant entities upon completion',
+
+	'notifications:settings:ticker' => 'Ticker timeout',
+	'notifications:settings:ticker:help' => '
+		An interval in seconds at which the notifications counter should be updated.
+		Set to 0 to disable automatic updates.
+		You may need to flush your caches for the changes to take effect.
+	',
+
 ];

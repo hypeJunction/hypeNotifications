@@ -40,6 +40,7 @@ elgg_register_event_handler('init', 'system', function() {
 	foreach ($subtypes as $subtype) {
 		elgg_register_plugin_hook_handler('view', "object/$subtype", [SiteNotificationsService::class, 'dismissObjectNotifications']);
 	}
+	elgg_register_plugin_hook_handler('elgg.data', 'site', [SiteNotificationsService::class, 'setClientSiteConfig']);
 
 	// Email notifications and transport
 	elgg_register_plugin_hook_handler('send', 'notification:email', [EmailNotificationsService::class, 'sendNotification'], 400);

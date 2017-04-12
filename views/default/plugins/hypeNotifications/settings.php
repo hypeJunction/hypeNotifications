@@ -5,6 +5,14 @@ $entity = elgg_extract('entity', $vars);
 $site = elgg_get_site_entity();
 
 echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('notifications:settings:ticker'),
+	'#help' => elgg_echo('notifications:settings:ticker:help'),
+	'name' => 'params[ticker]',
+	'value' => isset($entity->ticker) ? $entity->ticker : 60,
+]);
+
+echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('notifications:settings:mode'),
 	'#help' => elgg_echo('notifications:settings:mode:help'),

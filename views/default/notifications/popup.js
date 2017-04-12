@@ -62,8 +62,12 @@ define(function (require) {
 		popup.ticker();
 		timeout();
 	};
+
 	var timeout = function () {
-		setTimeout(ticker, 60000);
+		var seconds = elgg.data.notifications.ticker || 60;
+		if (seconds) {
+			setTimeout(ticker, seconds * 1000);
+		}
 	};
 
 	if (elgg.is_logged_in()) {
