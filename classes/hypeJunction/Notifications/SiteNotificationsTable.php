@@ -246,12 +246,12 @@ class SiteNotificationsTable {
 			SET access_guid = :access_guid,
 				access_owner_guid = :access_owner_guid,
 				access_id = :access_id
-			WHERE id = :id AND object_type = :type
+			WHERE object_id = :object_id AND object_type = :type
 		";
 
 		if ($object instanceof ElggEntity) {
 			$params = [
-				':id' => (int) $object->guid,
+				':object_id' => (int) $object->guid,
 				':type' => (string) $object->getType(),
 				':access_guid' => (int) $object->guid,
 				':access_owner_guid' => (int) $object->owner_guid,
@@ -260,7 +260,7 @@ class SiteNotificationsTable {
 			return update_data($query, $params);
 		} else if ($object instanceof ElggExtender) {
 			$params = [
-				':id' => (int) $object->id,
+				':object_id' => (int) $object->id,
 				':type' => (string) $object->getType(),
 				':access_guid' => (int) $object->entity_guid,
 				':access_owner_guid' => (int) $object->owner_guid,
