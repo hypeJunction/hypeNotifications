@@ -363,10 +363,11 @@ class SiteNotificationsTable {
 	/**
 	 * Mark notifications about an entity as read
 	 *
-	 * @param int $guid GUID
+	 * @param int $guid           GUID
+	 * @param int $recipient_guid Recipient GUID (defaults to logged in user)
 	 * @return bool
 	 */
-	public function markReadByEntityGUID($guid) {
+	public function markReadByEntityGUID($guid, $recipient_guid = null) {
 
 		$query = "
 			UPDATE {$this->table}
@@ -374,11 +375,17 @@ class SiteNotificationsTable {
 				time_read = :time
 			WHERE object_id = :guid
 			AND object_type IN ('object', 'user', 'site', 'group')
+			AND recipient_guid = :recipient_guid
 		";
 
+		if (!isset($recipient_guid)) {
+			$recipient_guid = elgg_get_logged_in_user_guid();
+		}
+		
 		$params = [
 			':time' => time(),
 			':guid' => (int) $guid,
+			':recipient_guid' => (int) $recipient_guid,
 		];
 
 		return update_data($query, $params);
@@ -389,9 +396,10 @@ class SiteNotificationsTable {
 	 *
 	 * @param int    $id   Object id
 	 * @param string $type Object type
+	 * @param int $recipient_guid Recipient GUID (defaults to logged in user)
 	 * @return bool
 	 */
-	public function markReadByExtenderID($id, $type) {
+	public function markReadByExtenderID($id, $type, $recipient_guid = null) {
 
 		$query = "
 			UPDATE {$this->table}
@@ -399,11 +407,17 @@ class SiteNotificationsTable {
 				time_read = :time
 			WHERE object_id = :guid
 			AND object_type = :type
+			AND recipient_guid = :recipient_guid
 		";
+
+		if (!isset($recipient_guid)) {
+			$recipient_guid = elgg_get_logged_in_user_guid();
+		}
 
 		$params = [
 			':time' => time(),
 			':guid' => (int) $type,
+			':recipient_guid' => (int) $recipient_guid,
 		];
 
 		return update_data($query, $params);

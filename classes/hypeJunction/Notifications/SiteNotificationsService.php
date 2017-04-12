@@ -140,6 +140,10 @@ class SiteNotificationsService {
 			return;
 		}
 
+		if (elgg_in_context('action')) {
+			return;
+		}
+
 		$vars = elgg_extract('vars', $params);
 
 		$entity = elgg_extract('entity', $vars);
