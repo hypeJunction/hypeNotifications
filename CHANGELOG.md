@@ -1,3 +1,19 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/hypeJunction/hypeNotifications/compare/1.0.1...v1.1.0) (2017-04-12)
+
+
+### Bug Fixes
+
+* **access:** entity/extender access now syncs correctly ([e372beb](https://github.com/hypeJunction/hypeNotifications/commit/e372beb))
+* **email:** let zend set content-type ([a43b66a](https://github.com/hypeJunction/hypeNotifications/commit/a43b66a))
+* **notifications:** only mark notifications as read for a logged in user ([ee182f9](https://github.com/hypeJunction/hypeNotifications/commit/ee182f9))
+
+### Features
+
+* **settings:** add an admin setting to set timer interval ([7ba5fc9](https://github.com/hypeJunction/hypeNotifications/commit/7ba5fc9)), closes [#8](https://github.com/hypeJunction/hypeNotifications/issues/8)
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/hypeJunction/hypeNotifications/compare/1.0.0...v1.0.1) (2017-04-10)
 
