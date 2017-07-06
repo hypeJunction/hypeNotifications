@@ -4,10 +4,12 @@ namespace hypeJunction\Notifications;
 
 use Elgg\Mail\Address as ElggEmail;
 use Elgg\Notifications\Notification as ElggNotification;
+use Elgg\Notifications\NotificationEvent;
 use ElggEntity;
 use ElggFile;
 use ElggUser;
 use Exception;
+use Mailgun\Api\Message;
 use NotificationException;
 use Zend\Mail\Address;
 use Zend\Mail\Message as EmailMessage;
@@ -30,6 +32,7 @@ class EmailNotificationsService {
 	 * @param string $type   "notification:email"
 	 * @param bool   $result Was the email already sent
 	 * @param array  $params Hook parameters
+	 *
 	 * @return bool
 	 */
 	public static function sendNotification($hook, $type, $result, $params) {
@@ -58,15 +61,62 @@ class EmailNotificationsService {
 		$to = new Address($recipient->email, $recipient->getDisplayName());
 
 		$site = elgg_get_site_entity();
-		$from_email = elgg_get_plugin_setting('from_email', 'hypeNotifications', $site->email);
-		if (!$from_email) {
-			$from_email = "noreply@{$site->getDomain()}";
+
+		if (elgg_is_active_plugin('mailgun')) {
+
+			$domain = elgg_get_plugin_setting('domain', 'mailgun');
+			$project = elgg_get_plugin_setting('project', 'mailgun');
+
+			if ($project) {
+				$from_email = "$project@$domain";
+			} else {
+				$from_email = "noreply@$domain";
+			}
+
+			$from_name = $sender->getDisplayName(); // But set the name to that of the sender
+
+			$from = new Address($from_email, $from_name);
+
+			// was the token provided with $params through notify_user()
+			$token = elgg_extract('token', $params);
+
+			if (!$token) {
+				// check if token has been added to notification by "prepare", "notification:*" hook
+				$token = $notification->token;
+			}
+
+			if (!$token) {
+				$notification_params = $notification->params;
+				$token = elgg_extract('token', $notification->params);
+			}
+
+			if (!$token) {
+				// check if we have a notification event with an object
+				$event = elgg_extract('event', $params);
+				if ($event instanceof NotificationEvent) {
+					$object = $event->getObject();
+					$token = mailgun_get_entity_notification_token($object, $event->getDescription());
+				}
+			}
+
+			if (!$token && $sender instanceof ElggUser) {
+				$options['token'] = mailgun_get_entity_notification_token($sender);
+				$token = \ArckInteractive\Mailgun\Message::addToken($from->getEmail(), $options['token']);
+				$from_email = mailgun_build_rfc822_address($token['email'], $sender->getDisplayName());
+				$from = ElggEmail::fromString($from_email);
+			}
+
+			$email_params['token'] = $token;
+		} else {
+			$from_email = elgg_get_plugin_setting('from_email', 'hypeNotifications', $site->email);
+			if (!$from_email) {
+				$from_email = "noreply@{$site->getDomain()}";
+			}
+			$from_name = elgg_get_plugin_setting('from_name', 'hypeNotifications', $site->name);
+			$from = new Address($from_email, $from_name);
 		}
-		$from_name = elgg_get_plugin_setting('from_name', 'hypeNotifications', $site->name);
 
-		$from = new Address($from_email, $from_name);
-
-		$email_params = array_merge((array) $notification->params, $params);
+		$email_params = array_merge((array)$notification->params, $params);
 		$email_params['notification'] = $notification;
 
 		return self::deliverEmail($from->toString(), $to->toString(), $notification->subject, $notification->body, $email_params);
@@ -79,6 +129,7 @@ class EmailNotificationsService {
 	 * @param string           $type         "notification"
 	 * @param ElggNotification $notification Notification
 	 * @param array            $params       Hook parameters
+	 *
 	 * @return ElggNotification
 	 */
 	public static function formatNotification($hook, $type, $notification, $params) {
@@ -90,7 +141,7 @@ class EmailNotificationsService {
 		if (!elgg_get_plugin_setting('enable_html_emails', 'hypeNotifications')) {
 			return;
 		}
-		
+
 		$body = elgg_view('notifications/wrapper/html/post', [
 			'notification' => $notification,
 		]);
@@ -109,6 +160,7 @@ class EmailNotificationsService {
 	 * @param string $type   "system"
 	 * @param mixed  $return Email params or bool
 	 * @param array  $params Hook params
+	 *
 	 * @return mixed
 	 */
 	public static function sendSystemEmail($hook, $type, $return, $params) {
@@ -175,19 +227,20 @@ class EmailNotificationsService {
 	 * @param string $subject The subject of the message
 	 * @param string $body    The message body
 	 * @param array  $params  Optional parameters
+	 *
 	 * @return bool
 	 * @throws NotificationException
 	 */
 	public static function deliverEmail($from, $to, $subject, $body, array $params = null) {
 
-		$options = array(
+		$options = [
 			'to' => $to,
 			'from' => $from,
 			'subject' => $subject,
 			'body' => $body,
 			'params' => $params,
 			'headers' => [],
-		);
+		];
 
 		$transport_name = elgg_get_plugin_setting('transport', 'hypeNotifications', 'sendmail');
 
@@ -205,7 +258,58 @@ class EmailNotificationsService {
 
 		$options = elgg_trigger_plugin_hook('email', 'system', $options, $options);
 		if (!is_array($options)) {
-			return (bool) $options;
+			return (bool)$options;
+		}
+
+		if ($transport_name == 'mailgun') {
+			if (elgg_is_active_plugin('mailgun')) {
+
+				try {
+					if (!empty($options['token']) && !preg_match('/\+(\S+)@.*/', $options['from'])) {
+						// Add a token to the email
+						$from_address = ElggEmail::fromString($options['from']);
+						$token = \ArckInteractive\Mailgun\Message::addToken($from_address->getEmail(), $options['token']);
+						$options['from'] = mailgun_build_rfc822_address($token['email'], $from_address->getName());
+					} else if (empty($options['token'])) {
+						$from_address = ElggEmail::fromString($options['from']);
+						$users = get_user_by_email($from_address->getEmail());
+						if ($users) {
+							$user = array_shift($users);
+							$options['token'] = mailgun_get_entity_notification_token($user);
+							$token = \ArckInteractive\Mailgun\Message::addToken($from_address->getEmail(), $options['token']);
+							$options['from'] = mailgun_build_rfc822_address($token['email'], $from_address->getName());
+							$options['token'] = $token;
+						}
+					}
+				} catch (\Exception $ex) {
+
+				}
+
+				$options['template'] = false;
+				if (elgg_get_plugin_setting('enable_html_emails', 'hypeNotifications')) {
+					$options['html'] = elgg_view('notifications/wrapper/html', $options);
+				} else {
+					$options['text'] = elgg_view('notifications/wrapper/plaintext', $options);
+				}
+
+				$files = elgg_extract('attachments', $options['params']);
+				unset($options['params']['attachments']);
+
+				if (!empty($files) && is_array($files)) {
+					foreach ($files as $file) {
+						if ($file instanceof ElggFile) {
+							$options['attachments'][] = [
+								'filename' => $file->originalfilename ?: basename($file->getFilename()),
+								'filePath' => $file->getFilenameOnFilestore(),
+							];
+						}
+					}
+				}
+
+				return mailgun_send_email($options);
+			} else {
+				$transport_name = 'sendmail';
+			}
 		}
 
 		try {
@@ -224,7 +328,7 @@ class EmailNotificationsService {
 
 			$options['subject'] = elgg_strip_tags($options['subject']);
 			$options['subject'] = html_entity_decode($options['subject'], ENT_QUOTES, 'UTF-8');
-			// Sanitise subject by stripping line endings
+// Sanitise subject by stripping line endings
 			$options['subject'] = preg_replace("/(\r\n|\r|\n)/", " ", $options['subject']);
 			$options['subject'] = elgg_get_excerpt(trim($options['subject'], 80));
 
@@ -235,7 +339,7 @@ class EmailNotificationsService {
 			$message->addTo($options['to']);
 			$message->setSubject($options['subject']);
 
-			// make the email body
+// make the email body
 			$mime_body = new MimeMessage();
 
 			if (elgg_get_plugin_setting('enable_html_emails', 'hypeNotifications')) {
@@ -278,8 +382,10 @@ class EmailNotificationsService {
 			}
 
 			$transport->send($message);
-		} catch (Exception $e) {
+		} catch
+		(Exception $e) {
 			elgg_log($e->getMessage(), 'ERROR');
+
 			return false;
 		}
 
@@ -290,6 +396,7 @@ class EmailNotificationsService {
 	 * Returns email transport
 	 *
 	 * @param string $name Transport type
+	 *
 	 * @return TransportInterface
 	 */
 	public static function getTransport($name = null) {
@@ -303,27 +410,27 @@ class EmailNotificationsService {
 				if (!is_dir($dirname)) {
 					mkdir($dirname, 0700, true);
 				}
-				$options = array(
+				$options = [
 					'path' => $dirname,
 					'callback' => function () {
 						return 'Message_' . microtime(true) . '_' . mt_rand() . '.txt';
 					},
-				);
+				];
 				$transport = new File(new FileOptions($options));
 				break;
 
 			case 'smtp' :
-				$options = array_filter(array(
+				$options = array_filter([
 					'name' => elgg_get_plugin_setting('smtp_host_name', 'hypeNotifications'),
 					'host' => elgg_get_plugin_setting('smtp_host', 'hypeNotifications'),
 					'port' => elgg_get_plugin_setting('smtp_port', 'hypeNotifications'),
 					'connection_class' => elgg_get_plugin_setting('smtp_connection', 'hypeNotifications'),
-					'connection_config' => array_filter(array(
+					'connection_config' => array_filter([
 						'username' => elgg_get_plugin_setting('smtp_username', 'hypeNotifications'),
 						'password' => elgg_get_plugin_setting('smtp_password', 'hypeNotifications'),
 						'ssl' => elgg_get_plugin_setting('smtp_ssl', 'hypeNotifications'),
-					)),
-				));
+					]),
+				]);
 				$transport = new Smtp(new SmtpOptions($options));
 				break;
 		}

@@ -99,7 +99,7 @@ return [
 	'notifications:settings:smtp_connection:login' => 'SMTP with AUTH LOGIN',
 	'notifications:settings:smtp_connection:crammd5' => 'SMTP with AUTH CRAM-MD5',
 	'notifications:settings:smtp_username' => 'SMTP Username',
-	'notifications:settings:smtp_password' => 'SMTP Passoword',
+	'notifications:settings:smtp_password' => 'SMTP Password',
 	
 	'notifications:settings:mode' => 'Site mode',
 	'notifications:settings:mode:help' => 'In staging mode, email/domain whitelist settings will apply. In production mode, emails will be sent as usual',

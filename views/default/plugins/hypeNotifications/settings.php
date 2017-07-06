@@ -17,7 +17,7 @@ echo elgg_view_field([
 	'#label' => elgg_echo('notifications:settings:mode'),
 	'#help' => elgg_echo('notifications:settings:mode:help'),
 	'name' => 'params[mode]',
-	'value' => $entity->mode ? : 'production',
+	'value' => $entity->mode ?: 'production',
 	'options_values' => [
 		'production' => elgg_echo('notifications:settings:mode:production'),
 		'staging' => elgg_echo('notifications:settings:mode:staging'),
@@ -81,11 +81,12 @@ echo elgg_view_field([
 	'#help' => elgg_echo('notifications:settings:transport:help'),
 	'name' => 'params[transport]',
 	'value' => $entity->transport,
-	'options_values' => array(
+	'options_values' => array_filter([
 		'sendmail' => elgg_echo('notifications:settings:transport:sendmail'),
 		'file' => elgg_echo('notifications:settings:transport:file'),
 		'smtp' => elgg_echo('notifications:settings:transport:smtp'),
-	),
+		'mailgun' => elgg_is_active_plugin('mailgun') ? 'Mailgun' : null,
+	]),
 ]);
 
 echo elgg_view_field([
@@ -110,11 +111,11 @@ echo elgg_view_field([
 	'#help' => elgg_echo('notifications:settings:smtp_ssl:help'),
 	'name' => 'params[smtp_ssl]',
 	'value' => $entity->smtp_ssl,
-	'options_values' => array(
+	'options_values' => [
 		'' => elgg_echo('option:no'),
 		'ssl' => 'SSL',
 		'tls' => 'TLS',
-	),
+	],
 ]);
 
 echo elgg_view_field([
@@ -123,12 +124,12 @@ echo elgg_view_field([
 	'#help' => elgg_echo('notifications:settings:smtp_connection:help'),
 	'name' => 'params[smtp_connection]',
 	'value' => $entity->smtp_connection,
-	'options_values' => array(
+	'options_values' => [
 		'smtp' => elgg_echo('notifications:settings:smtp_connection:smtp'),
 		'plain' => elgg_echo('notifications:settings:smtp_connection:plain'),
 		'login' => elgg_echo('notifications:settings:smtp_connection:login'),
 		'crammd5' => elgg_echo('notifications:settings:smtp_connection:crammd5'),
-	),
+	],
 ]);
 
 echo elgg_view_field([

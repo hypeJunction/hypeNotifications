@@ -23,5 +23,11 @@
 		<type>plugin</type>
 		<name>site_notifications</name>
 	</conflicts>
-	
+
+	<suggests>
+		<type>priority</type>
+		<plugin>mailgun</plugin>
+		<priority>after</priority>
+	</suggests>
+
 </plugin_manifest>

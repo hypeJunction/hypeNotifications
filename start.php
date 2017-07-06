@@ -47,6 +47,12 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('email', 'system', [EmailNotificationsService::class, 'sendSystemEmail'], 100);
 	elgg_register_plugin_hook_handler('format', 'notification:email', [EmailNotificationsService::class, 'formatNotification'], 999);
 
+	// Mailgun overrides
+	if (elgg_is_active_plugin('mailgun')) {
+		elgg_unregister_plugin_hook_handler('email', 'system', 'mailgun_email_handler');
+		elgg_unregister_plugin_hook_handler('send', 'notification:email', 'mailgun_send_email_notification');
+	}
+
 	// Actions
 	elgg_register_action('admin/notifications/methods', __DIR__ . '/actions/admin/notifications/methods.php', 'admin');
 	elgg_register_action('admin/notifications/test_email', __DIR__ . '/actions/admin/notifications/test_email.php', 'admin');
