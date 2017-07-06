@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/hypeJunction/hypeNotifications/compare/1.1.0...v1.2.0) (2017-07-06)
+
+
+### Features
+
+* **mailgun:** add mailgun support ([1b01e5d](https://github.com/hypeJunction/hypeNotifications/commit/1b01e5d))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/hypeJunction/hypeNotifications/compare/1.0.1...v1.1.0) (2017-04-12)
 
