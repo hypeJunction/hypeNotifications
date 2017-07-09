@@ -1,3 +1,13 @@
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/hypeJunction/hypeNotifications/compare/1.3.0...v1.3.1) (2017-07-09)
+
+
+### Bug Fixes
+
+* **menu:** add missing icon text ([6141442](https://github.com/hypeJunction/hypeNotifications/commit/6141442))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/hypeJunction/hypeNotifications/compare/1.2.0...v1.3.0) (2017-07-09)
 
