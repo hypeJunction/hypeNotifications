@@ -55,6 +55,13 @@ class Menus {
 				]),
 			]);
 		} else {
+
+			if (elgg_is_active_plugin('menus_api')) {
+				$text = elgg_echo('notifications');
+			} else {
+				$text = elgg_view_icon('bell');
+			}
+
 			$counter = elgg_format_element('span', [
 				'id' => 'notifications-new',
 				'class' => $count ? 'notifications-unread-count messages-new' : 'notifications-unread-count messages-new hidden',
