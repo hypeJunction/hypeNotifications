@@ -35,35 +35,50 @@ class Menus {
 			$count = '99+';
 		}
 
-		if (elgg_is_active_plugin('menus_api')) {
-			$text = elgg_echo('notifications');
+		if (elgg_is_active_plugin('hypeUI')) {
+			$return[] = ElggMenuItem::factory([
+				'name' => 'notifications',
+				'href' => 'notifications/all#notifications-popup',
+				'text' => elgg_echo('notifications'),
+				'badge' => $count ? : '',
+				'priority' => 600,
+				'tooltip' => elgg_echo('notifications:thread:unread', [$count]),
+				'rel' => 'popup',
+				'id' => 'notifications-popup-link',
+				'link_class' => 'has-hidden-label',
+				'icon' => 'bell',
+				'data-position' => json_encode([
+					'my' => 'center top',
+					'of' => 'center bottom',
+					'of' => '.elgg-menu-topbar > .elgg-menu-item-notifications',
+					'collission' => 'fit fit',
+				]),
+			]);
 		} else {
-			$text = elgg_view_icon('bell');
+			$counter = elgg_format_element('span', [
+				'id' => 'notifications-new',
+				'class' => $count ? 'notifications-unread-count messages-new' : 'notifications-unread-count messages-new hidden',
+			], $count);
+
+			$return[] = ElggMenuItem::factory([
+				'name' => 'notifications',
+				'href' => 'notifications/all#notifications-popup',
+				'text' => $text . $counter,
+				'priority' => 600,
+				'tooltip' => elgg_echo('notifications:thread:unread', [$count]),
+				'rel' => 'popup',
+				'id' => 'notifications-popup-link',
+				'data' => [
+					'icon' => 'bell',
+				],
+				'data-position' => json_encode([
+					'my' => 'left top',
+					'of' => 'left bottom',
+					'of' => '#notifications-popup-link',
+					'collission' => 'fit fit',
+				]),
+			]);
 		}
-
-		$counter = elgg_format_element('span', [
-			'id' => 'notifications-new',
-			'class' => $count ? 'notifications-unread-count messages-new' : 'notifications-unread-count messages-new hidden',
-				], $count);
-
-		$return[] = ElggMenuItem::factory(array(
-					'name' => 'notifications',
-					'href' => 'notifications/all#notifications-popup',
-					'text' => $text . $counter,
-					'priority' => 600,
-					'tooltip' => elgg_echo('notifications:thread:unread', array($count)),
-					'rel' => 'popup',
-					'id' => 'notifications-popup-link',
-					'data' => [
-						'icon' => 'bell',
-					],
-					'data-position' => json_encode([
-						'my' => 'left top',
-						'of' => 'left bottom',
-						'of' => '#notifications-popup-link',
-						'collission' => 'fit fit',
-					]),
-		));
 
 		return $return;
 	}

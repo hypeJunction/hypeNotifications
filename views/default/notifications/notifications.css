@@ -1,5 +1,6 @@
 .elgg-notifications-popup {
-	max-width: 400px;
+	width: 400px;
+	max-width: 100%;
 	padding: 0;
 }
 
@@ -25,7 +26,7 @@
 }
 
 .elgg-notifications-popup .notifications-list > li {
-	padding: 0;
+	padding: 0 !important;
 }
 
 .elgg-notifications-popup .notifications-list .elgg-image-block {
@@ -35,7 +36,7 @@
 .notifications-list .elgg-content,
 .notifications-list .elgg-output,
 .notifications-list p {
-	margin: 0;
+	margin: 0 !important;
 }
 
 .elgg-notifications-popup .elgg-foot {
