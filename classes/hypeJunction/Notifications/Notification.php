@@ -79,6 +79,7 @@ class Notification extends ElggData {
 			if (!$this->get('time_created')) {
 				$this->set('time_created', time());
 			}
+
 			return $svc->getTable()->insert($this);
 		} else {
 			return $svc->getTable()->update($this);
@@ -99,6 +100,7 @@ class Notification extends ElggData {
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
+
 		return $this->$name;
 	}
 
@@ -108,6 +110,7 @@ class Notification extends ElggData {
 	protected function set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {
 			$this->attributes[$name] = $value;
+
 			return;
 		}
 		$this->$name = $value;
@@ -117,6 +120,7 @@ class Notification extends ElggData {
 	 * Set the recipient
 	 *
 	 * @param ElggEntity $recipient Recipient
+	 *
 	 * @return void
 	 * @throws LogicException
 	 */
@@ -124,17 +128,17 @@ class Notification extends ElggData {
 		if ($this->id) {
 			throw new LogicException('Can not change the recipient of the notification once it is saved');
 		}
-		$this->set('recipient_guid', (int) $recipient->guid);
+		$this->set('recipient_guid', (int)$recipient->guid);
 		if (null == $this->access_guid) {
-			$this->set('access_guid', (int) $recipient->guid);
-			$this->set('access_owner_guid', (int) $recipient->guid);
+			$this->set('access_guid', (int)$recipient->guid);
+			$this->set('access_owner_guid', (int)$recipient->guid);
 			$this->set('access_id', ACCESS_PRIVATE);
 		}
 	}
 
 	/**
 	 * Get the recipient
-	 * 
+	 *
 	 * @return ElggEntity|false
 	 */
 	public function getRecipient() {
@@ -145,6 +149,7 @@ class Notification extends ElggData {
 	 * Set actor
 	 *
 	 * @param ElggEntity $actor Actor
+	 *
 	 * @return void
 	 * @throws LogicException
 	 */
@@ -154,9 +159,10 @@ class Notification extends ElggData {
 		}
 		if (!isset($actor)) {
 			$this->set('actor_guid', null);
+
 			return;
 		}
-		$this->set('actor_guid', (int) $actor->guid);
+		$this->set('actor_guid', (int)$actor->guid);
 	}
 
 	/**
@@ -172,6 +178,7 @@ class Notification extends ElggData {
 	 * Set action
 	 *
 	 * @param string $action Action name
+	 *
 	 * @return void
 	 * @throws LogicException
 	 */
@@ -179,13 +186,14 @@ class Notification extends ElggData {
 		if ($this->id) {
 			throw new LogicException('Can not change the action of the notification once it is saved');
 		}
-		$this->set('action', (string) $action);
+		$this->set('action', (string)$action);
 	}
 
 	/**
 	 * Set the object
 	 *
 	 * @param ElggData $object Object
+	 *
 	 * @return void
 	 * @throws LogicException
 	 */
@@ -200,8 +208,13 @@ class Notification extends ElggData {
 		}
 
 		if ($object instanceof ElggData) {
-			$this->set('object_type', (string) $object->getType());
-			$this->set('object_subtype', (string) $object->getSubtype());
+			$this->set('object_type', (string)$object->getType());
+			$this->set('object_subtype', (string)$object->getSubtype());
+		}
+
+		while ($object instanceof \ElggComment) {
+			// Special case, because the access id owner is the owner of the original item
+			$object = $object->getContainerEntity();
 		}
 
 		if ($object instanceof ElggEntity) {
@@ -239,6 +252,7 @@ class Notification extends ElggData {
 	 * Set extra data
 	 *
 	 * @param mixed $data Data
+	 *
 	 * @return void
 	 */
 	public function setData($data = null) {
@@ -257,6 +271,7 @@ class Notification extends ElggData {
 	 * Mark notification as seen
 	 *
 	 * @param int $timestamp Time seen
+	 *
 	 * @return void
 	 */
 	public function markAsSeen($timestamp = null) {
@@ -281,6 +296,7 @@ class Notification extends ElggData {
 	 * Mark notification as read
 	 *
 	 * @param int $timestamp Time read
+	 *
 	 * @return void
 	 */
 	public function markAsRead($timestamp = null) {
@@ -306,6 +322,7 @@ class Notification extends ElggData {
 	 */
 	public function delete() {
 		$svc = SiteNotificationsService::getInstance();
+
 		return $svc->getTable()->delete($this->id);
 	}
 
@@ -364,6 +381,7 @@ class Notification extends ElggData {
 		if (!$id) {
 			return false;
 		}
+
 		return elgg_normalize_url("notifications/view/$id");
 	}
 
@@ -399,7 +417,7 @@ class Notification extends ElggData {
 	 * {@inheritdoc}
 	 */
 	public function toObject() {
-		return (object) $this->attributes;
+		return (object)$this->attributes;
 	}
 
 	/**
@@ -454,7 +472,7 @@ class Notification extends ElggData {
 		if (!$summary) {
 			$summary = $this->data['summary'];
 		}
-		
+
 		$params = [
 			'notification' => $this,
 		];

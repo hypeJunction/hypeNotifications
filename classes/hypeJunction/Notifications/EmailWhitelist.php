@@ -54,7 +54,7 @@ class EmailWhitelist {
 		if (!isset(self::$emails)) {
 			$setting = elgg_get_plugin_setting('staging_emails', 'hypeNotifications', '');
 			$emails = explode(PHP_EOL, $setting);
-			$emails = array_map([self, 'normalize'], $emails);
+			$emails = array_map([EmailWhitelist::class, 'normalize'], $emails);
 			$emails = array_filter($emails, function($email) {
 				return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
 			});
@@ -71,7 +71,7 @@ class EmailWhitelist {
 		if (!isset(self::$domains)) {
 			$setting = elgg_get_plugin_setting('staging_domains', 'hypeNotifications', '');
 			$domains = explode(PHP_EOL, $setting);
-			$domains = array_map([self, 'normalize'], $domains);
+			$domains = array_map([EmailWhitelist::class, 'normalize'], $domains);
 			$domains = array_filter($domains);
 			self::$domains = $domains;
 		}

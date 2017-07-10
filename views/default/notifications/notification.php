@@ -47,15 +47,9 @@ $content .= elgg_format_element('div', [
 	'class' => 'notification-time',
 ], elgg_view_friendly_time($notification->time_created));
 
-echo elgg_view('object/elements/summary', [
-	'entity' => $actor,
-	'title' => false,
-	'tags' => false,
-	'content' => $content,
-	'metadata' => elgg_view_menu('notification', $vars),
-	'icon' => $icon,
-	'image_block_vars' => [
-		'class' => $class,
-		'data-id' => $notification->id,
-	],
+$menu = elgg_view_menu('notification', $vars);
+
+echo elgg_view_image_block($icon, $content . $menu, [
+	'class' => $class,
+	'data-id' => $notification->id,
 ]);
