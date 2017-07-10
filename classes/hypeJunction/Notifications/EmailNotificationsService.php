@@ -65,8 +65,11 @@ class EmailNotificationsService {
 		if (elgg_is_active_plugin('mailgun')) {
 
 			$domain = elgg_get_plugin_setting('domain', 'mailgun');
-			$project = elgg_get_plugin_setting('project', 'mailgun');
+			if (!$domain) {
+				$domain = $site->getDomain();
+			}
 
+			$project = elgg_get_plugin_setting('project', 'mailgun');
 			if ($project) {
 				$from_email = "$project@$domain";
 			} else {
