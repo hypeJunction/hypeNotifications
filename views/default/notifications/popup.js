@@ -18,8 +18,10 @@ define(function (require) {
 			}
 			if (unread > 0) {
 				$('#notifications-new').text(unread_str).removeClass('hidden');
+				$('#notifications-popup-link .elgg-badge').text(unred_text);
 			} else {
 				$('#notifications-new').text(unread_str).addClass('hidden');
+                $('#notifications-popup-link .elgg-badge').text('');
 			}
 		},
 		ticker: function () {
