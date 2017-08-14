@@ -1,3 +1,13 @@
+<a name="1.3.3"></a>
+## [1.3.3](https://github.com/hypeJunction/hypeNotifications/compare/1.3.2...v1.3.3) (2017-08-14)
+
+
+### Bug Fixes
+
+* **js:** fix typo ([8d4e68a](https://github.com/hypeJunction/hypeNotifications/commit/8d4e68a))
+
+
+
 <a name="1.3.2"></a>
 ## [1.3.2](https://github.com/hypeJunction/hypeNotifications/compare/1.2.0...v1.3.2) (2017-08-14)
 
