@@ -1,3 +1,19 @@
+<a name="1.3.2"></a>
+## [1.3.2](https://github.com/hypeJunction/hypeNotifications/compare/1.2.0...v1.3.2) (2017-08-14)
+
+
+### Bug Fixes
+
+* **comments:** comment notifications now have correct access_id query ([c474d38](https://github.com/hypeJunction/hypeNotifications/commit/c474d38))
+* **mailgun:** fall back to site domain if none is set ([92b145d](https://github.com/hypeJunction/hypeNotifications/commit/92b145d))
+* **menu:** add missing icon text ([6141442](https://github.com/hypeJunction/hypeNotifications/commit/6141442))
+
+### Features
+
+* **ui:** integrate with hypeUI ([dadc025](https://github.com/hypeJunction/hypeNotifications/commit/dadc025))
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/hypeJunction/hypeNotifications/compare/1.3.0...v1.3.1) (2017-07-09)
 
