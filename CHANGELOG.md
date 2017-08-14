@@ -1,3 +1,13 @@
+<a name="1.3.4"></a>
+## [1.3.4](https://github.com/hypeJunction/hypeNotifications/compare/1.3.3...v1.3.4) (2017-08-14)
+
+
+### Bug Fixes
+
+* **js:** late night :( ([f38e531](https://github.com/hypeJunction/hypeNotifications/commit/f38e531))
+
+
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://github.com/hypeJunction/hypeNotifications/compare/1.3.2...v1.3.3) (2017-08-14)
 
