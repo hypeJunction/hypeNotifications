@@ -70,6 +70,7 @@ elgg_register_event_handler('init', 'system', function() {
 
 	elgg_extend_view('elgg.css', 'notifications.css'); // core notifications
 	elgg_extend_view('elgg.css', 'notifications/notifications.css');
+	elgg_extend_view('admin.css', 'notifications/notifications.css');
 
 });
 

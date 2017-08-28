@@ -28,3 +28,7 @@
 .elgg-list .elgg-subscription-methods {
 	border-bottom: none;
 }
+
+.notifications-smtp-settings {
+	margin-left: 24px;
+}

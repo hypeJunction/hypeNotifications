@@ -17,7 +17,7 @@ echo elgg_view_field([
 	'#label' => elgg_echo('notifications:settings:mode'),
 	'#help' => elgg_echo('notifications:settings:mode:help'),
 	'name' => 'params[mode]',
-	'value' => $entity->mode ?: 'production',
+	'value' => $entity->mode ? : 'production',
 	'options_values' => [
 		'production' => elgg_echo('notifications:settings:mode:production'),
 		'staging' => elgg_echo('notifications:settings:mode:staging'),
@@ -81,6 +81,7 @@ echo elgg_view_field([
 	'#help' => elgg_echo('notifications:settings:transport:help'),
 	'name' => 'params[transport]',
 	'value' => $entity->transport,
+	'class' => 'notifications-transport-selector',
 	'options_values' => array_filter([
 		'sendmail' => elgg_echo('notifications:settings:transport:sendmail'),
 		'file' => elgg_echo('notifications:settings:transport:file'),
@@ -89,7 +90,10 @@ echo elgg_view_field([
 	]),
 ]);
 
-echo elgg_view_field([
+
+$smpt = '';
+
+$smtp .= elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('notifications:settings:smtp_host'),
 	'#help' => elgg_echo('notifications:settings:smtp_host:help'),
@@ -97,7 +101,7 @@ echo elgg_view_field([
 	'value' => $entity->smtp_host,
 ]);
 
-echo elgg_view_field([
+$smtp .= elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('notifications:settings:smtp_port'),
 	'#help' => elgg_echo('notifications:settings:smtp_port:help'),
@@ -105,7 +109,7 @@ echo elgg_view_field([
 	'value' => $entity->smtp_port,
 ]);
 
-echo elgg_view_field([
+$smtp .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('notifications:settings:smtp_ssl'),
 	'#help' => elgg_echo('notifications:settings:smtp_ssl:help'),
@@ -118,7 +122,7 @@ echo elgg_view_field([
 	],
 ]);
 
-echo elgg_view_field([
+$smtp .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('notifications:settings:smtp_connection'),
 	'#help' => elgg_echo('notifications:settings:smtp_connection:help'),
@@ -132,16 +136,27 @@ echo elgg_view_field([
 	],
 ]);
 
-echo elgg_view_field([
+$smtp .= elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('notifications:settings:smtp_username'),
 	'name' => 'params[smtp_username]',
 	'value' => $entity->smtp_username,
+	'autocomplete' => 'off',
 ]);
 
-echo elgg_view_field([
+$smtp .= elgg_view_field([
 	'#type' => 'password',
 	'#label' => elgg_echo('notifications:settings:smtp_password'),
 	'name' => 'params[smtp_password]',
 	'value' => $entity->smtp_password,
+	'autocomplete' => 'off',
 ]);
+
+echo elgg_format_element('div', [
+	'class' => [
+		'notifications-smtp-settings',
+		$entity->transport !== 'smtp' ? 'hidden' : '',
+	],
+], $smtp);
+
+elgg_require_js('plugins/hypeNotifications/settings');
