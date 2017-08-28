@@ -119,7 +119,7 @@ class EmailNotificationsService {
 			$from = new Address($from_email, $from_name);
 		}
 
-		$email_params = array_merge((array)$notification->params, $params);
+		$email_params = array_merge((array) $notification->params, $params);
 		$email_params['notification'] = $notification;
 
 		return self::deliverEmail($from->toString(), $to->toString(), $notification->subject, $notification->body, $email_params);
@@ -211,8 +211,8 @@ class EmailNotificationsService {
 		}
 		$email_params['event'] = $event;
 
-		$language = $recipient->language ?: 'en';
-		$summary = $email_params['summary'] ?: '';
+		$language = $recipient->language ? : 'en';
+		$summary = $email_params['summary'] ? : '';
 
 		$notification = new ElggNotification($sender, $recipient, $language, $return['subject'], $return['body'], $summary, $email_params);
 
@@ -261,7 +261,7 @@ class EmailNotificationsService {
 
 		$options = elgg_trigger_plugin_hook('email', 'system', $options, $options);
 		if (!is_array($options)) {
-			return (bool)$options;
+			return (bool) $options;
 		}
 
 		if ($transport_name == 'mailgun') {
@@ -302,7 +302,7 @@ class EmailNotificationsService {
 					foreach ($files as $file) {
 						if ($file instanceof ElggFile) {
 							$options['attachments'][] = [
-								'filename' => $file->originalfilename ?: basename($file->getFilename()),
+								'filename' => $file->originalfilename ? : basename($file->getFilename()),
 								'filePath' => $file->getFilenameOnFilestore(),
 							];
 						}
@@ -331,7 +331,7 @@ class EmailNotificationsService {
 
 			$options['subject'] = elgg_strip_tags($options['subject']);
 			$options['subject'] = html_entity_decode($options['subject'], ENT_QUOTES, 'UTF-8');
-// Sanitise subject by stripping line endings
+			// Sanitise subject by stripping line endings
 			$options['subject'] = preg_replace("/(\r\n|\r|\n)/", " ", $options['subject']);
 			$options['subject'] = elgg_get_excerpt(trim($options['subject'], 80));
 
@@ -342,7 +342,7 @@ class EmailNotificationsService {
 			$message->addTo($options['to']);
 			$message->setSubject($options['subject']);
 
-// make the email body
+			// make the email body
 			$mime_body = new MimeMessage();
 
 			if (elgg_get_plugin_setting('enable_html_emails', 'hypeNotifications')) {
@@ -364,8 +364,8 @@ class EmailNotificationsService {
 				foreach ($files as $file) {
 					if ($file instanceof ElggFile) {
 						$attachment = new MimePart(fopen($file->getFilenameOnFilestore(), 'r'));
-						$attachment->type = $file->getMimeType() ?: $file->detectMimeType();
-						$attachment->filename = $file->originalfilename ?: basename($file->getFilename());
+						$attachment->type = $file->getMimeType() ? : $file->detectMimeType();
+						$attachment->filename = $file->originalfilename ? : basename($file->getFilename());
 						$attachment->disposition = Mime::DISPOSITION_ATTACHMENT;
 						$attachment->encoding = Mime::ENCODING_BASE64;
 						$mime_body->addPart($attachment);
@@ -385,8 +385,7 @@ class EmailNotificationsService {
 			}
 
 			$transport->send($message);
-		} catch
-		(Exception $e) {
+		} catch (Exception $e) {
 			elgg_log($e->getMessage(), 'ERROR');
 
 			return false;

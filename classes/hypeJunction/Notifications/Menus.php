@@ -122,6 +122,15 @@ class Menus {
 		]);
 
 		$return[] = ElggMenuItem::factory([
+			'name' => 'notifications:settings',
+			'text' => elgg_echo('settings'),
+			'href' => 'admin/plugin_settings/hypeNotifications',
+			'section' => 'configure',
+			'parent_name' => 'notifications',
+			'context' => ['admin'],
+		]);
+
+		$return[] = ElggMenuItem::factory([
 					'name' => 'notifications:methods',
 					'text' => elgg_echo('admin:notifications:methods'),
 					'href' => 'admin/notifications/methods',
