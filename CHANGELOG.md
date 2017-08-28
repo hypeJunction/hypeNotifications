@@ -1,3 +1,14 @@
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/hypeJunction/hypeNotifications/compare/1.3.4...v1.4.0) (2017-08-28)
+
+
+### Features
+
+* **admin:** improve transport settings UI ([e1e9521](https://github.com/hypeJunction/hypeNotifications/commit/e1e9521))
+* **menus:** add menu item for settings ([2fd38ad](https://github.com/hypeJunction/hypeNotifications/commit/2fd38ad))
+
+
+
 <a name="1.3.4"></a>
 ## [1.3.4](https://github.com/hypeJunction/hypeNotifications/compare/1.3.3...v1.3.4) (2017-08-14)
 
