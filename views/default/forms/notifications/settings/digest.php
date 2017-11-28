@@ -9,10 +9,7 @@ $notification_events = DigestService::getNotificationEvents();
 $subscription_events = (array) elgg_extract('subscriptions', $notification_events);
 $instant_events = (array) elgg_extract('instant', $notification_events);
 
-echo elgg_view('output/longtext', [
-	'value' => elgg_echo('notifications:settings:digest:help'),
-	'class' => 'elgg-text-help',
-]);
+echo elgg_format_element('div', [], elgg_echo('notifications:settings:digest:help'));
 
 $frequency_options = [
 	DigestService::NEVER => elgg_echo('notifications:frequency:never'),
@@ -24,6 +21,7 @@ $frequency_options = [
 ];
 
 $subscriptions = '';
+$subscriptions .= elgg_format_element('p', ['class' => 'margin-none'], elgg_echo('notifications:subscriptions:title'));
 foreach ($subscription_events as $entity_type => $entity_subtypes) {
 	foreach ($entity_subtypes as $entity_subtype => $events) {
 		foreach ($events as $event) {
@@ -43,8 +41,8 @@ if ($subscriptions) {
 	echo elgg_view_module('info', elgg_echo('notifications:subscriptions'), $subscriptions);
 }
 
-
 $instant = '';
+$instant .= elgg_format_element('p', ['class' => 'margin-none'], elgg_echo('notifications:instant:title'));
 foreach ($instant_events as $entity_type => $entity_subtypes) {
 	foreach ($entity_subtypes as $entity_subtype => $events) {
 		foreach ($events as $event) {

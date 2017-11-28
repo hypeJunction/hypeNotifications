@@ -62,8 +62,10 @@ return [
 	'notification:instant:invite:group:default' => 'Someone invites you to join a group',
 	'notification:instant:create:object:comment' => 'Someone comments on your content',
 
-	'notifications:subscriptions' => 'Notifications about friends and groups',
+	'notifications:subscriptions' => 'Activity notifications',
+	'notifications:subscriptions:title' => 'Notifications about activity related to you and your content',
 	'notifications:instant' => 'Personal notifications',
+	'notifications:instant:title' => 'Notifications about your friends and groups',
 
 	'notifications:settings:digest:success' => 'Notification settings have been saved successfully',
 
