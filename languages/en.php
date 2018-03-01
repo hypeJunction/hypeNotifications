@@ -53,6 +53,7 @@ return [
 	'notification:subscriptions:publish:object:news' => 'News item is published',
 	'notification:subscriptions:publish:object:hjwall' => 'New wall post is made',
 	'notification:subscriptions:create:object:videolist_item' => 'New video is added',
+    'notification:subscriptions:create:object:event_calendar' => 'New calendar event',
 
 	'notification:instant:add_friend:user:default' => 'Someone adds you as a friend',
 	'notification:instant:friend_request:user:default' => 'Someone requests to add you as a friend',
