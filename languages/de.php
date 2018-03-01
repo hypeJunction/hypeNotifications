@@ -53,6 +53,7 @@ return [
 	'notification:subscriptions:publish:object:news' => 'Neuigkeit hinzugefügt',
 	'notification:subscriptions:publish:object:hjwall' => 'Neuer Pinnwand-Eintrag',
 	'notification:subscriptions:create:object:videolist_item' => 'Neues Video',
+	'notification:subscriptions:create:object:event_calendar' => 'Neuer Kalendereintrag',
 
 	'notification:instant:add_friend:user:default' => 'Jemand hat dich als Freund hinzugefügt',
 	'notification:instant:friend_request:user:default' => 'Jemand hat Dir eine Freundschaftsanfrage geschickt',
