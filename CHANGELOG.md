@@ -1,3 +1,13 @@
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/hypeJunction/hypeNotifications/compare/1.4.0...1.4.1) (2019-02-13)
+
+
+### Bug Fixes
+
+* **mailgun:** only pass correct entity types to mailgun tokenizer ([e8c3d1e](https://github.com/hypeJunction/hypeNotifications/commit/e8c3d1e))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/hypeJunction/hypeNotifications/compare/1.3.4...v1.4.0) (2017-08-28)
 
