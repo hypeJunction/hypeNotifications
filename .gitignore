@@ -12,3 +12,4 @@ robots.txt
 composer.lock
 Gemfile.lock
 package-lock.json
+yarn.lock
