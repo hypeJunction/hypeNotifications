@@ -98,7 +98,6 @@ class EmailNotificationsService {
 				$event = elgg_extract('event', $params);
 				if ($event instanceof NotificationEvent) {
 					$object = $event->getObject();
-					h
 					if ($object instanceof ElggEntity) {
 						$token = mailgun_get_entity_notification_token($object, $event->getDescription());
 					}
