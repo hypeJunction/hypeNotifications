@@ -1,3 +1,13 @@
+<a name="1.4.3"></a>
+## [1.4.3](https://github.com/hypeJunction/hypeNotifications/compare/1.4.2...1.4.3) (2019-02-13)
+
+
+### Bug Fixes
+
+* **classes:** fix typo ([caf6604](https://github.com/hypeJunction/hypeNotifications/commit/caf6604))
+
+
+
 <a name="1.4.2"></a>
 ## [1.4.2](https://github.com/hypeJunction/hypeNotifications/compare/1.4.1...1.4.2) (2019-02-13)
 
