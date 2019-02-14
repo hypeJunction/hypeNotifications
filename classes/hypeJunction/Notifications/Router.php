@@ -6,7 +6,7 @@ class Router {
 
 	public static function routeNotifications($hook, $type, $return, $params) {
 
-		$segments = elgg_extract('segments', $return);
+		$segments = (array) elgg_extract('segments', $return);
 
 		$page = array_shift($segments);
 
