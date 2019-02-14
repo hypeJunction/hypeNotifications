@@ -1,3 +1,13 @@
+<a name="1.4.4"></a>
+## [1.4.4](https://github.com/hypeJunction/hypeNotifications/compare/1.4.3...1.4.4) (2019-02-14)
+
+
+### Bug Fixes
+
+* **router:** prevent warnings from being tossed into the log ([f6839af](https://github.com/hypeJunction/hypeNotifications/commit/f6839af))
+
+
+
 <a name="1.4.3"></a>
 ## [1.4.3](https://github.com/hypeJunction/hypeNotifications/compare/1.4.2...1.4.3) (2019-02-13)
 
